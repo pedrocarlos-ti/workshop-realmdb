@@ -9,15 +9,17 @@ export default function App({ props, like }) {
   return (
     <View style={styles.containert}>
       <View style={styles.group}>
-        {/* <Image
+        <Image
           style={styles.avatar}
           source={{
-            uri: props.author.photo,
+            uri: props.avatar,
           }}
-        /> */}
+        />
         <View style={styles.profile}>
-          <Text style={styles.name}>Morty Smith</Text>
-          <Text style={styles.nickname}>@ohMan</Text>
+          <View style={styles.group}>
+            <Text style={styles.name}>{props.name}</Text>
+            <Text style={styles.nickname}>{props.nickname}</Text>
+          </View>
 
           <Text>{props.title}</Text>
           <Text>{props.description}</Text>
@@ -59,6 +61,7 @@ const styles = StyleSheet.create({
   },
   group: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   avatar: {
     width: 70,

@@ -7,6 +7,9 @@ class Post {
       title: 'string',
       description: 'string',
       likes: { type: 'int', default: 0 },
+      avatar: 'string?',
+      name: 'string?',
+      nickname: 'string?',
     },
   };
 }

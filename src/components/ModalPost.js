@@ -14,65 +14,67 @@ export default function ModalPost({ isEnabled, close, savePost }) {
   const [description, setDescription] = useState('');
   const [person, setPerson] = useState('rick');
 
+  //Select Rick or Morty
   function selectCharacter(name) {
     switch (name) {
       case 'rick':
         return {
-          id: '@rick',
-          name: 'Rick',
-          lastName: 'Sanchez',
+          name: 'Rick Sanchez',
           nickname: '@Wubbalubbadubdub',
-          photo: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
+          avatar: 'https://rickandmortyapi.com/api/character/avatar/1.jpeg',
         };
       case 'morty':
         return {
-          id: '@morty',
-          name: 'Morty',
-          lastName: 'Smith',
-          nickname: '@ohMan..',
-          photo:
+          name: 'Morty Smith',
+          nickname: '@ohMan',
+          avatar:
             'https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/83/83939c1eba80f6c3baf410abe85b524b6ed0598e_full.jpg',
         };
       default:
-        return {};
+        return '';
     }
+  }
+
+  //Reset Form and submit Post
+  function save() {
+    setTitle('');
+    setDescription('');
+    savePost({
+      title,
+      description,
+      person: selectCharacter(person),
+    });
   }
 
   return (
     <Modal visible={isEnabled} onRequestClose={close} transparent>
       <View style={styles.container}>
         <View style={styles.inputBox}>
-          <Text style={styles.title}>Novo Post</Text>
+          <Text style={styles.title}>NOVO POST</Text>
           <TextInput
             style={styles.input}
+            placeholder="Qual o titulo do post?"
             value={title}
             onChangeText={v => setTitle(v)}
           />
           <TextInput
             style={styles.input}
+            placeholder="Qual a descrição do post?"
             value={description}
             onChangeText={v => setDescription(v)}
           />
-
           <Picker selectedValue={person} onValueChange={v => setPerson(v)}>
             <Picker.Item label="Rick Sanchez" value="rick" />
             <Picker.Item label="Morty Smith" value="morty" />
           </Picker>
-
-          <Button
-            style={styles.button}
-            title="Adicionar Post"
-            onPress={() =>
-              // savePost({ title, description, user: selectCharacter(person) })
-              savePost({ title, description })
-            }
-          />
+          <Button style={styles.button} title="Adicionar Post" onPress={save} />
         </View>
       </View>
     </Modal>
   );
 }
 
+//Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -95,6 +97,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: '#E7E7E7',
     marginBottom: 10,
+    paddingLeft: 10,
   },
   button: {
     margin: 10,

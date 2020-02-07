@@ -20,7 +20,7 @@ import Posts from './components/Post';
 import ModalPost from './components/ModalPost';
 
 //Trick
-// console.disableYellowBox = true;
+console.disableYellowBox = true;
 
 const SERVER_URL = 'https://reactrecife.us1a.cloud.realm.io/';
 const SERVER_URL_SYNC = 'realms://reactrecife.us1a.cloud.realm.io/workshop';
@@ -47,7 +47,9 @@ export default class App extends Component {
           id: String(+new Date()),
           title: post.title,
           description: post.description,
-          avatar: post.avatar,
+          avatar: post.person.avatar,
+          name: post.person.name,
+          nickname: post.person.nickname,
         });
       });
 
@@ -74,7 +76,7 @@ export default class App extends Component {
   async componentDidMount() {
     try {
       // await Realm.Sync.Credentials.usernamePassword('admin', 'admin');
-      await Realm.Sync.User.login(SERVER_URL, 'admin', 'admin');
+      await Realm.Sync.User.login(SERVER_URL, 'admin', 'admin'); //Expira em 01/03/20 dias.
       Realm.open({
         path: 'workshop.realm',
         sync: {
@@ -97,7 +99,7 @@ export default class App extends Component {
           this.setState({ posts: results, realm });
         })
         .catch(e => alert(e.toString()));
-    } catch (error) {
+    } catch (_) {
       const realm = new Realm({
         path: 'workshop.realm',
         sync: {
